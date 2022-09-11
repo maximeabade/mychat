@@ -25,6 +25,9 @@ io.on("connection", function (socket) {
     socket.join(data);
     console.log("User joined room: ".concat(socket.id, " joined room: ").concat(data));
   });
+  socket.on("send_message", function (data) {
+    console.log("User sent message: ".concat(data));
+  });
   socket.on(disconnect, function (err) {
     console.log("disconnect", socket.id);
   });
