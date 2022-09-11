@@ -1,4 +1,4 @@
-"use strict";
+
 
 var express = require('express');
 
@@ -15,23 +15,21 @@ app.use(cors());
 var server = http.createServer(app);
 var io = new Server(server, {
   cors: {
-    origin: "http://localhost:3001",
-    methods: ["GET", "POST", "PUT", "DELETE"]
+    origin: "http://localhost:3000",
+    methods: ["GET", "DELETE"]
   }
 });
 io.on("connection", function (socket) {
-  console.log("User connected: ".concat(socket.id));
   socket.on("join_room", function (data) {
     socket.join(data);
-    console.log("User joined room: ".concat(socket.id, " joined room: ").concat(data));
   });
   socket.on("send_message", function (data) {
-    console.log("User sent message: ".concat(data));
+    socket.to(data.room).emit("receive_message", data);
   });
-  socket.on(disconnect, function (err) {
+  socket.on(disconnect, function () {
     console.log("disconnect", socket.id);
   });
 });
-server.listen(3001, function () {
+server.listen(3000, function () {
   console.log("Server is running on port 3000");
 });
