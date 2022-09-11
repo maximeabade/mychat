@@ -20,7 +20,7 @@ io.on("connection", (socket) => {
     console.log(socket.id);
 
     socket.on(disconnect, (err) => {
-        console.log("disconnect");
+        console.log("disconnect", socket.id);
     });    
 });
 
