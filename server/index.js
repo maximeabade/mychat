@@ -17,8 +17,12 @@ const io = new Server(server , {
 })
 
 io.on("connection", (socket) => {
-    console.log(socket.id);
+    console.log(`User connected: ${socket.id}`);
 
+    socket.on("join_room", (data) => {
+        socket.join(data);
+        console.log(`User joined room: ${socket.id} joined room: ${data}`);
+    })
     socket.on(disconnect, (err) => {
         console.log("disconnect", socket.id);
     });    
@@ -26,6 +30,6 @@ io.on("connection", (socket) => {
 
 
 server.listen(3001, () => {
-   console.log("Server is running on port 3001"); 
+   console.log("Server is running on port 3000"); 
 });
 
